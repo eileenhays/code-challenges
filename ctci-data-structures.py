@@ -18,7 +18,6 @@ def array_left_rotation2(a, n, k):
 	for i in range(n): 
 		new_idx = (i + k) % n
 		new_a.append(a[new_idx])
-		print new_a
 
 	return new_a
         
@@ -35,12 +34,24 @@ print array_left_rotation2([4, 0, 3], 3, 1) == [0,3,4]
 
 ### Strings: Making Anagrams
 def number_needed(a, b):
-    pass
+    count = 0
+    b = list(b)
+    
+    for char in a:
+        if char in b: 
+            b.remove(char) # make it mutable
+        else: # char not in b 
+            count += 1
+            
+    count += len(b)   
+    return count
 
-a = raw_input().strip()
-b = raw_input().strip()
+# a = raw_input().strip()
+# b = raw_input().strip()
 
-print number_needed(a, b)
+# print number_needed(a, b)
 
-# # Tests
+# Tests
 print number_needed('cde', 'abc') == 4 
+print number_needed('abbc', 'bda') == 3 
+
