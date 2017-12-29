@@ -55,3 +55,38 @@ def number_needed(a, b):
 print number_needed('cde', 'abc') == 4 
 print number_needed('abbc', 'bda') == 3 
 
+## Hash Tables: Randsom Note
+def ransom_note(m, n, magazine, ransom):
+    if n > m:
+        return False
+    
+    mag_dict = {}
+    
+    for word in magazine:
+        if word not in mag_dict:
+            mag_dict[word] = 1
+        else: 
+            mag_dict[word] += 1
+    
+    for word in ransom:
+        if word not in mag_dict:
+            return False
+        elif mag_dict[word] == 0:
+            return False
+        else:
+            mag_dict[word] -= 1
+        
+    return True            
+
+# m, n = map(int, raw_input().strip().split(' '))
+# magazine = raw_input().strip().split(' ')
+# ransom = raw_input().strip().split(' ')
+# answer = ransom_note(magazine, ransom, m, n)
+# if(answer):
+#     print "Yes"
+# else:
+#     print "No"
+
+# Tests
+print ransom_note(6, 4, 'give me one grand today night', 'give one grand today') == True
+print ransom_note(6, 5, 'two times three is not four', 'two times two is four') == False
