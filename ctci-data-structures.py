@@ -116,6 +116,16 @@ def has_cycle(head, visited=[]):
     visited.append(node)
     return has_cycle(node.next, visited)
 
+# def has_cycle2(head):
+#     curr = head
+#     seen = set()
+#     while curr:
+#         if curr in seen:
+#             return True
+#         seen.add(curr)
+#         curr = curr.next
+#     return False
+
 # Tests
 no_cycle_ll = Node(4, Node(5, Node(6, None)))
 node_1 = Node(1, None)
@@ -130,5 +140,69 @@ print has_cycle(no_cycle_ll) == False
 print has_cycle(cycle_ll) == True
 
 
+## Trees: Is this a Binary Search Tree? 
+""" Node is defined as:
+"""
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.left = None
+        self.right = None
 
 
+def checkBST(root):
+    return check(root, min=0, max=10000)
+
+def check(root, min, max):
+    curr = root
+
+    if curr == None: 
+        return True
+
+    if curr.data <= min or curr.data >= max:
+        return False
+
+    return check(curr.left, min, curr.data) and check(curr.right, curr.data, max)
+
+def checkBST2(root):
+    pass
+    # return True if BST, or False if not
+
+    # if left is not null 
+    # check if it is smaller than root, if not, return False
+    # if right is not null
+    # check if it is larger than root, if not, return False
+    # check the left side of the tree
+        #set curr root to left, recurse and check each side
+    # check the right side of the tree
+        # set curr root to right, recurse and check each side 
+    # return True
+    # optimization: 
+        # create a seen set to add node values as you traverse tree
+        # check if the value is in seen before moving on
+            #if it is, then return False because it is a duplicate
+
+# Tests
+node1 = Node(1)
+node2 = Node(2)
+node3 = Node(3)
+node4 = Node(4)
+node5 = Node(5)
+node6 = Node(6)
+node7a = Node(7)
+node7b = Node(7)
+
+node4.left, node4.right = node2, node6
+node2.left, node2.right = node1, node3
+node6.left, node6.right = node5, node7a
+root_no_duplicates = node4
+
+print checkBST(root_no_duplicates) == True
+
+node4.left, node4.right = node2, node6
+node2.left, node2.right = node1, node3
+node6.left, node6.right = node5, node7a
+node5.right = node7b
+root_with_duplicates = node4
+
+print checkBST(root_with_duplicates) == False
