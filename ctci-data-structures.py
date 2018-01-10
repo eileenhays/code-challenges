@@ -29,7 +29,7 @@ def array_left_rotation2(a, n, k):
 # print ' '.join(map(str,answer))
 
 # Tests
-print array_left_rotation2([1,2,3,4,5], 5, 4) == [5,1,2,3,4] 
+print array_left_rotation2([1, 2, 3, 4, 5], 5, 4) == [5,1,2,3,4] 
 print array_left_rotation2([4, 0, 3], 3, 1) == [0,3,4]
 
 ### Strings: Making Anagrams
@@ -206,3 +206,94 @@ node5.right = node7b
 root_with_duplicates = node4
 
 print checkBST(root_with_duplicates) == False
+
+
+## Queues: A Tale of Two Stacks
+
+"""
+In this challenge, you must first implement a queue using two stacks. Then process  queries, where each query is one of the following  types:
+
+1 x: Enqueue element  into the end of the queue. (put)
+2: Dequeue the element at the front of the queue. (pop)
+3: Print the element at the front of the queue. (peek)
+"""
+
+class MyQueue(object):
+    def __init__(self):
+        self.first = []
+        self.second = []
+    
+    def peek(self):
+        return self.first[-1]
+        
+    def pop(self):
+        self.first.pop()
+        
+    def put(self, value):
+        self.first.insert(0, value)
+        
+def run_function(input):        
+    queue = MyQueue()
+    t = int(raw_input())
+    for line in xrange(t):
+        values = map(int, raw_input().split())
+        
+        if values[0] == 1:
+            queue.put(values[1])        
+        elif values[0] == 2:
+            queue.pop()
+        else:
+            print queue.peek()
+
+# Tests
+# in_value = "10\n1 42\n2\n1 14\n3\n1 28\n3\n1 60\n1 78\n2\n2"
+# out_value = "14\n14"
+# print "Queue: ", run_function(in_value) == out_value
+
+
+## Stacks: Balanced Parentheses 
+
+
+def is_matched(expression):
+    is_balanced = False
+    front_brackets = ['[', '{', '(']
+    back_brackets = [']', '}', ')']
+    stack = []
+    
+    for char in expression:
+        if char in front_brackets: 
+            stack.append(char)
+        elif char in back_brackets:
+            if back_brackets.index(char) == front_brackets.index(stack[-1]):
+                stack.pop()
+            else: 
+                return is_balanced
+                
+    if stack == []: 
+        is_balanced = True
+    
+    return is_balanced
+
+def is_matched2(expression):
+    is_balanced = False
+    brackets = {')': '(', '}': '{', ']': '['}
+    stack = []
+    
+    for char in expression:
+        if char in brackets.values(): 
+            stack.append(char)
+        else: # assuming that chars can only be one of the keys or values  
+            if stack == []:
+                return is_balanced
+            elif brackets[char] == stack[-1]:
+               stack.pop()
+                
+    if stack == []: 
+        is_balanced = True
+    
+    return is_balanced
+
+# Tests
+print is_matched2("{[()]}") == True 
+print is_matched2("{[(])}") == False 
+print is_matched2("{{[[(())]]}}") == True 
